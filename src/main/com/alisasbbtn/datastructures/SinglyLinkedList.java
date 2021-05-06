@@ -4,14 +4,14 @@ import java.util.NoSuchElementException;
 
 public class SinglyLinkedList<T> {
 
-    private Node<T> head;
-    private Node<T> tail; // optional
+    private Node head;
+    private Node tail; // optional
     private int length; // optional
 
-    public static class Node<T> {
+    public class Node {
 
         private T value;
-        private Node<T> next;
+        private Node next;
 
         Node(T value) {
             this.value = value;
@@ -41,14 +41,14 @@ public class SinglyLinkedList<T> {
         //    and set the tail property on the list to be the newly created node
         // 5) Increment the length by one
 
-        Node<T> node = new Node<>(value);
+        Node node = new Node(value);
+
         if (head == null) {
             head = node;
-            tail = head;
         } else {
             tail.next = node;
-            tail = node;
         }
+        tail = node;
 
         length++;
 
@@ -65,8 +65,8 @@ public class SinglyLinkedList<T> {
 
         if (head == null) throw new NoSuchElementException();
 
-        Node<T> current = head;
-        Node<T> newTail = current;
+        Node current = head;
+        Node newTail = current;
 
         while (current.next != null) {
             newTail = current;
@@ -94,7 +94,7 @@ public class SinglyLinkedList<T> {
 
         if (head == null) return null;
 
-        Node<T> currentHead = head;
+        Node currentHead = head;
         head = currentHead.next;
         length--;
 
@@ -115,29 +115,28 @@ public class SinglyLinkedList<T> {
         // 6) Increment the length of the list by 1
         // 7) Return the linked list
 
-        Node<T> node = new Node<>(value);
+        Node node = new Node(value);
 
         if (head == null) {
-            head = node;
-            tail = head;
+            tail = node;
         } else {
             node.next = head;
-            head = node;
         }
+        head = node;
 
         length++;
 
         return this;
     }
 
-    public Node<T> get(int index) {
+    public Node get(int index) {
         // 1) This function should accept an index
         // 2) If the index is less than zero or greater than or equal to the length of the list return null
         // 3) Loop through the list until you reach the index and return the node at that specific index.
 
         if (index < 0 || index >= length) throw new IndexOutOfBoundsException();
 
-        Node<T> current = head;
+        Node current = head;
 
         int counter = 0;
         while (counter != index) {
@@ -154,7 +153,7 @@ public class SinglyLinkedList<T> {
         // 3) If the node is not found return false
         // 4) If the node is found set the value of that node to be the value passed to the function and return true
 
-        Node<T> node = get(index);
+        Node node = get(index);
         node.value = value;
 
         return this;
@@ -172,9 +171,9 @@ public class SinglyLinkedList<T> {
         if (index == length) return push(value);
         if (index == 0) return unshift(value);
 
-        Node<T> newNode = new Node<>(value);
-        Node<T> previousNode = get(index - 1);
-        Node<T> temp = previousNode.next;
+        Node newNode = new Node(value);
+        Node previousNode = get(index - 1);
+        Node temp = previousNode.next;
         previousNode.next = newNode;
         newNode.next = temp;
 
@@ -192,13 +191,13 @@ public class SinglyLinkedList<T> {
         // 6) Decrement the length
         // 7) Return the value of the node removed
 
-        if(index < 0 || index >= length) throw new IndexOutOfBoundsException();
+        if (index < 0 || index >= length) throw new IndexOutOfBoundsException();
 
-        if(index == length - 1) return pop();
-        if(index == 0) return shift();
+        if (index == length - 1) return pop();
+        if (index == 0) return shift();
 
-        Node<T> previousNode = get(index - 1);
-        Node<T> removedNode = previousNode.next;
+        Node previousNode = get(index - 1);
+        Node removedNode = previousNode.next;
         previousNode.next = removedNode.next;
 
         length--;
@@ -207,12 +206,12 @@ public class SinglyLinkedList<T> {
     }
 
     public SinglyLinkedList<T> reverse() {
-        Node<T> node = head;
+        Node node = head;
         head = tail;
         tail = node;
 
-        Node<T> next;
-        Node<T> prev = null;
+        Node next;
+        Node prev = null;
 
         for (int i = 0; i < length; i++) {
             next = node.next;
@@ -225,7 +224,7 @@ public class SinglyLinkedList<T> {
     }
 
 //    public void traverse() {
-//        Node<T> current = head;
+//        Node current = head;
 //        while (current != null) {
 //            current = current.next;
 //        }
