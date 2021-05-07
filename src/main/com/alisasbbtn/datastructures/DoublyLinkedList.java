@@ -230,4 +230,22 @@ public class DoublyLinkedList<T> {
         return removedNode.value;
     }
 
+    public DoublyLinkedList<T> reverse() {
+        Node temp = null;
+        Node current = head;
+
+        while(current != null) {
+            temp = current.prev;
+            current.prev = current.next;
+            current.prev = temp;
+            current = current.prev;
+        }
+
+        if (temp != null) {
+            head = temp.prev;
+        }
+
+        return this;
+    }
+
 }
