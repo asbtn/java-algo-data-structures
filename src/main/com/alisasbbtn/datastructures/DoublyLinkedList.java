@@ -3,27 +3,23 @@ package com.alisasbbtn.datastructures;
 import java.util.NoSuchElementException;
 
 public class DoublyLinkedList<T> {
-    private Node head;
-    private Node tail; // optional
+    private Node<T> head;
+    private Node<T> tail; // optional
     private int length; // optional
 
-    public class Node {
+    static private class Node<T> {
 
         private T value;
-        private Node next;
-        private Node prev;
-
-        Node(T value) {
+        private Node<T> prev;
+        private Node<T> next;
+        
+        public Node(T value) {
             this.value = value;
             next = null;
             prev = null;
         }
-
-        public T getValue() {
-            return value;
-        }
     }
-
+    
     public DoublyLinkedList() {
         length = 0;
         head = null;
@@ -39,7 +35,7 @@ public class DoublyLinkedList<T> {
         // 6) Increment the length
         // 7) Return the list
 
-        Node node = new Node(value);
+        Node<T> node = new Node<>(value);
 
         if (length == 0) {
             head = node;
@@ -63,7 +59,7 @@ public class DoublyLinkedList<T> {
         // 6) Decrement the length
         // 7) Return the value removed
 
-        Node currentTail = tail;
+        Node<T> currentTail = tail;
 
         if (length == 0) throw new NoSuchElementException();
 
@@ -93,7 +89,7 @@ public class DoublyLinkedList<T> {
 
         if (length == 0) throw new NoSuchElementException();
 
-        Node oldHead = head;
+        Node<T> oldHead = head;
 
         if (length == 1) {
             head = null;
@@ -107,7 +103,6 @@ public class DoublyLinkedList<T> {
         length--;
 
         return oldHead.value;
-
     }
 
     public DoublyLinkedList<T> unshift(T value) {
@@ -119,7 +114,7 @@ public class DoublyLinkedList<T> {
         // 3) Increment the length
         // 4) Return the list
 
-        Node node = new Node(value);
+        Node<T> node = new Node<>(value);
 
         if (length == 0) {
             tail = node;
@@ -134,7 +129,11 @@ public class DoublyLinkedList<T> {
         return this;
     }
 
-    public Node get(int index) {
+    public T get(int index) {
+        return find(index).value;
+    }
+
+    private Node<T> find(int index) {
         // 1) If the index is less than 0 or greater or equal to the length return null
         // 2) If the index is less than or equal to half the length of the list: loop through the list starting from the head and loop towards the middle
         // 3) Otherwise, loop through the list starting from the tail and loop towards the middle
@@ -142,7 +141,7 @@ public class DoublyLinkedList<T> {
 
         if (index < 0 || index >= length) throw new IndexOutOfBoundsException();
 
-        Node current;
+        Node<T> current;
         int counter;
 
         if (index <= length / 2) {
@@ -170,7 +169,7 @@ public class DoublyLinkedList<T> {
         // 1) Create a variable from get()
         // 2) Set the value of that node to be value passed to the function
 
-        Node node = get(index);
+        Node<T> node = find(index);
         node.value = value;
 
         return this;
@@ -188,10 +187,10 @@ public class DoublyLinkedList<T> {
 
         if (index == 0) return unshift(value);
         if (index == length) return push(value);
-        
-        Node newNode = new Node(value);
-        Node beforeNode = get(index - 1);
-        Node afterNode = beforeNode.next;
+
+        Node<T> newNode = new Node<>(value);
+        Node<T> beforeNode = find(index - 1);
+        Node<T> afterNode = beforeNode.next;
 
         beforeNode.next = newNode;
         newNode.prev = beforeNode;
@@ -212,12 +211,13 @@ public class DoublyLinkedList<T> {
         // 6) Set next and prev to null on found node
         // 7) Decrement the length
         // 8) Return the removed node
+
         if (index < 0 || index >= length) throw new IndexOutOfBoundsException();
 
         if (index == 0) return shift();
         if (index == length - 1) return pop();
 
-        Node removedNode = get(index);
+        Node<T> removedNode = find(index);
 
         removedNode.prev.next = removedNode.next;
         removedNode.next.prev = removedNode.prev;
@@ -231,8 +231,8 @@ public class DoublyLinkedList<T> {
     }
 
     public DoublyLinkedList<T> reverse() {
-        Node temp = null;
-        Node current = head;
+        Node<T> temp = null;
+        Node<T> current = head;
 
         while(current != null) {
             temp = current.prev;
