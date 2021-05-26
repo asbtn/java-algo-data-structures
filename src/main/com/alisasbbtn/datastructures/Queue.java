@@ -59,12 +59,9 @@ public class Queue<T> {
         Node<T> currentFirst = first;
 
         if (first == last) {
-            first = null;
             last = null;
-        } else {
-            first.next = first;
         }
-
+        first = first.next;
         size--;
 
         return currentFirst.value;
