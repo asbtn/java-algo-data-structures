@@ -16,6 +16,11 @@ public class Queue<T> {
             this.value = value;
             next = null;
         }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
     }
 
     public Queue() {
@@ -65,5 +70,17 @@ public class Queue<T> {
         size--;
 
         return currentFirst.value;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Node<T> current = first;
+        while(current != null) {
+            sb.append(current.value).append(" ");
+            current = current.next;
+        }
+
+        return sb.toString();
     }
 }

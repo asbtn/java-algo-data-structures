@@ -12,14 +12,19 @@ public class DoublyLinkedList<T> {
         private T value;
         private Node<T> prev;
         private Node<T> next;
-        
+
         public Node(T value) {
             this.value = value;
             next = null;
             prev = null;
         }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
     }
-    
+
     public DoublyLinkedList() {
         length = 0;
         head = null;
@@ -234,7 +239,7 @@ public class DoublyLinkedList<T> {
         Node<T> temp = null;
         Node<T> current = head;
 
-        while(current != null) {
+        while (current != null) {
             temp = current.prev;
             current.prev = current.next;
             current.prev = temp;
@@ -248,4 +253,15 @@ public class DoublyLinkedList<T> {
         return this;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Node<T> current = head;
+        while (current != null) {
+            sb.append(current.value).append(" ");
+            current = current.next;
+        }
+
+        return sb.toString();
+    }
 }

@@ -17,6 +17,11 @@ public class Stack<T> {
             this.value = value;
             next = null;
         }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
     }
 
     public Stack() {
@@ -71,5 +76,17 @@ public class Stack<T> {
         size--;
 
         return currentFirst.value;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Node<T> current = first;
+        while(current != null) {
+            sb.append(current.value).append(" ");
+            current = current.next;
+        }
+
+        return sb.toString();
     }
 }
