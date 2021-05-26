@@ -17,6 +17,11 @@ public class BinarySearchTree {
             left = null;
             right = null;
         }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
     }
 
 
@@ -101,5 +106,36 @@ public class BinarySearchTree {
                 throw new NoSuchElementException();
             }
         }
+    }
+
+    public SinglyLinkedList<Integer> breadthFirstSearch() {
+        // Create a queue (this can be an array) and a variable (list) to store the values of nodes visited
+        // Place the root node in the queue
+        // Loop as long as there is anything in the queue
+        // Dequeue a node from the queue and push the value of the node into the variable that stores the nodes
+        // If there is a left property on the node requeued - add it to the queue
+        // If there is a right property on the node dequeued - add it to the queue
+
+        Queue<Node> queue = new Queue<>();
+        SinglyLinkedList<Integer> visited = new SinglyLinkedList<>();
+
+        queue.enqueue(root);
+
+        while (queue.size() != 0) {
+            Node node = queue.dequeue();
+            visited.push(node.value);
+            if (node.left != null) {
+                queue.enqueue(node.left);
+            }
+            if (node.right != null) {
+                queue.enqueue(node.right);
+            }
+        }
+        return visited;
+    }
+
+    @Override
+    public String toString() {
+        return breadthFirstSearch().toString();
     }
 }

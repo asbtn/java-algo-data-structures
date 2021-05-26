@@ -23,6 +23,10 @@ public class Queue<T> {
         }
     }
 
+    public int size() {
+        return size;
+    }
+
     public Queue() {
         this.first = null;
         this.last = null;
